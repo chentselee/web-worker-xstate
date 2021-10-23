@@ -1,8 +1,16 @@
-import { delay } from './delay'
+import { interpret } from 'xstate'
+import { workerMachine } from './worker.machine'
 
-onmessage = async (e) => {
+const workerService = interpret(workerMachine.withConfig({
+  actions: {
+    pong: () => {
+      postMessage({ type: "PONG" })
+    }
+  }
+})).start()
+
+onmessage = (e) => {
   if (e.data.type === 'PING') {
-    await delay(5)
-    postMessage({ type: 'PONG' })
+    workerService.send({ type: "PING" })
   }
 }
