@@ -7,10 +7,15 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.10",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "@xstate/react": "^1.6.1",
     "comlink": "^4.3.1",
+    "framer-motion": "^4",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "ts-pattern": "^3.3.3",
     "xstate": "^4.25.0"
   },
   "devDependencies": {
