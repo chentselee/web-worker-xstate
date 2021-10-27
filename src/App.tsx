@@ -2,7 +2,7 @@ import {
   pingWorkerService,
   pingSyncService,
   pingAsyncService,
-} from "./main.machine";
+} from "./ping.machine";
 import {
   Input,
   Container,

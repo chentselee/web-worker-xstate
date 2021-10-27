@@ -7,12 +7,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { match } from "ts-pattern";
-import { mainMachine } from "./main.machine";
+import { pingMachine } from "./ping.machine";
 import { ActorRefFrom } from "xstate";
 import { useActor } from "@xstate/react";
 
 interface Props {
-  actorRef: ActorRefFrom<typeof mainMachine>;
+  actorRef: ActorRefFrom<typeof pingMachine>;
   buttonText?: string;
 }
 

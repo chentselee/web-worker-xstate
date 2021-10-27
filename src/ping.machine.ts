@@ -4,21 +4,21 @@ import { delay, delaySync } from "./delay";
 
 const pingWorker = new PingWorker();
 
-interface MainMachineContext {}
+interface PingMachineContext {}
 
 type PingEvent = { type: "PING" };
 type PongEvent = { type: "PONG" };
-type MainMachineEvent = PingEvent | PongEvent;
+type PingMachineEvent = PingEvent | PongEvent;
 
-type MainMachineState =
-  | { value: "idle"; context: MainMachineContext }
-  | { value: "waitingForResponse"; context: MainMachineContext }
-  | { value: "received"; context: MainMachineContext };
+type PingMachineState =
+  | { value: "idle"; context: PingMachineContext }
+  | { value: "waitingForResponse"; context: PingMachineContext }
+  | { value: "received"; context: PingMachineContext };
 
-export const mainMachine = createMachine<
-  MainMachineContext,
-  MainMachineEvent,
-  MainMachineState
+export const pingMachine = createMachine<
+  PingMachineContext,
+  PingMachineEvent,
+  PingMachineState
 >({
   initial: "idle",
   states: {
@@ -48,7 +48,7 @@ export const mainMachine = createMachine<
 });
 
 export const pingWorkerService = interpret(
-  mainMachine.withConfig({
+  pingMachine.withConfig({
     services: {
       ping: () => () => {
         pingWorker.postMessage({ type: "PING" });
@@ -64,7 +64,7 @@ pingWorker.onmessage = (e) => {
 };
 
 export const pingSyncService = interpret(
-  mainMachine.withConfig({
+  pingMachine.withConfig({
     services: {
       ping: () => (send) => {
         console.log("sync start");
@@ -77,7 +77,7 @@ export const pingSyncService = interpret(
 ).start();
 
 export const pingAsyncService = interpret(
-  mainMachine.withConfig({
+  pingMachine.withConfig({
     services: {
       ping: () => async (send) => {
         console.log("async start");
